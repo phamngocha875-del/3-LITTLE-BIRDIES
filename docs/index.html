@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>L'Écrin - Luxury Fragrance Experience</title>
     
     <!-- Tailwind CSS -->
@@ -11,10 +11,10 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- Google Fonts Fallback -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Cinzel:wght@400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 
     <style>
         /* Custom Font Declaration */
@@ -23,39 +23,47 @@
             src: local('Maglite'), local('Playfair Display'), local('Didot');
         }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0a0a0a;
-            color: #f5f5f5;
-            -webkit-tap-highlight-color: transparent;
+        :root {
+            /* Muted, elegant Champagne/Metallic Gold */
+            --luxury-gold: #C8A97E; 
+            /* Subtle noise texture for luxury feel */
+            --bg-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
         }
 
-        .font-maglite {
-            font-family: 'Maglite', 'Playfair Display', serif;
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #161311; 
+            background-image: radial-gradient(circle at 50% 0%, #2a221d 0%, #0c0b0a 85%), var(--bg-texture);
+            background-blend-mode: normal, overlay;
+            color: #f5f5f5;
+            -webkit-tap-highlight-color: transparent;
+            overscroll-behavior-y: none;
         }
+
+        /* Safe Area Padding for iPhone */
+        .pt-safe { padding-top: max(env(safe-area-inset-top), 24px); }
+        .pb-safe { padding-bottom: max(env(safe-area-inset-bottom), 16px); }
+
+        .font-maglite { font-family: 'Maglite', 'Playfair Display', serif; }
+        .font-cinzel { font-family: 'Cinzel', serif; } 
+        .font-montserrat { font-family: 'Montserrat', sans-serif; }
 
         /* Animations */
         @keyframes pulse-gold {
-            0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
-            70% { box-shadow: 0 0 0 30px rgba(212, 175, 55, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+            0% { box-shadow: 0 0 0 0 rgba(200, 169, 126, 0.4); }
+            70% { box-shadow: 0 0 0 30px rgba(200, 169, 126, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(200, 169, 126, 0); }
+        }
+        @keyframes scan-line {
+            0% { top: 0; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
         }
         @keyframes dust-rise {
             0% { transform: translateY(0) scale(1); opacity: 0; }
             50% { opacity: 1; }
             100% { transform: translateY(-100px) scale(0); opacity: 0; }
-        }
-        @keyframes smoke-expand {
-            0% { transform: scale(0.8); opacity: 0.8; filter: blur(10px); }
-            100% { transform: scale(2.5); opacity: 0; filter: blur(20px); }
-        }
-        @keyframes orbit {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        @keyframes counter-orbit {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(-360deg); }
         }
         @keyframes fade-in {
             from { opacity: 0; transform: translateY(10px); }
@@ -67,30 +75,66 @@
         .animate-in { animation: fade-in 0.7s ease-out forwards; }
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .brand-logo-ysl { font-family: 'Inter', sans-serif; font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase; }
+        .brand-logo-lancome { font-family: 'Maglite', serif; letter-spacing: 0.1em; text-transform: uppercase; }
+        .brand-logo-prada { font-family: 'Cinzel', serif; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; }
+        .brand-logo-valentino { font-family: 'Cinzel', serif; font-weight: 400; letter-spacing: 0.25em; text-transform: uppercase; }
+        .brand-logo-margiela { font-family: 'Inter', sans-serif; font-weight: 400; letter-spacing: 0.05em; background: white; color: black; padding: 2px 6px; font-size: 0.75rem; text-transform: none !important;}
+
+        .text-luxury { color: var(--luxury-gold); }
+        .bg-luxury { background-color: var(--luxury-gold); }
+        .border-luxury { border-color: var(--luxury-gold); }
     </style>
 </head>
-<body class="selection:bg-[#D4AF37] flex justify-center h-screen overflow-hidden">
+<body class="selection:bg-[#C8A97E] flex justify-center h-[100dvh] overflow-hidden">
 
     <!-- Mobile Container -->
-    <div class="relative w-full h-full max-w-md bg-neutral-950 overflow-hidden shadow-2xl flex flex-col">
+    <div class="relative w-full h-full max-w-md bg-transparent overflow-hidden shadow-2xl flex flex-col border-x border-white/5">
         
+        <!-- ========================================== -->
+        <!-- EMPATHIC NOTIFICATION OVERLAY              -->
+        <!-- ========================================== -->
+        <div id="empathic-notification" class="absolute top-10 left-4 right-4 z-[100] transform -translate-y-[150%] opacity-0 transition-all duration-700 ease-out pointer-events-none mt-safe pt-4">
+            <div class="bg-[#161311]/95 backdrop-blur-xl border border-[#C8A97E]/40 rounded-3xl p-5 shadow-[0_20px_50px_rgba(0,0,0,0.9)] pointer-events-auto">
+                <div class="flex items-start gap-4">
+                    <div class="w-10 h-10 rounded-full bg-[#C8A97E]/10 flex items-center justify-center shrink-0 border border-[#C8A97E]/40 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-[#C8A97E]/20 animate-pulse"></div>
+                        <i data-lucide="sparkles" class="w-5 h-5 text-luxury relative z-10"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-maglite text-luxury text-lg mb-1">Sensory Companion</h4>
+                        <p class="text-xs text-neutral-300 leading-relaxed font-light mb-4">
+                            Hi Sarah, I noticed a slight spike in your stress levels. Would you like me to diffuse the calming neroli notes of <span class="text-luxury">Prada Paradoxe</span> to help you find your center? 🤍
+                        </p>
+                        <div class="flex gap-3">
+                            <button onclick="closeNotification()" class="flex-1 py-2.5 bg-luxury text-black text-[10px] font-bold tracking-widest uppercase rounded-full hover:bg-[#b09369] transition-colors shadow-lg">
+                                Yes, Please
+                            </button>
+                            <button onclick="closeNotification()" class="flex-1 py-2.5 border border-neutral-600 text-neutral-300 text-[10px] font-bold tracking-widest uppercase rounded-full hover:bg-neutral-800 transition-colors">
+                                Not Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- ========================================== -->
         <!-- SCREEN 1: THE AWAKENING                    -->
         <!-- ========================================== -->
-        <div id="screen-awakening" class="absolute inset-0 flex flex-col items-center justify-center bg-black z-50 transition-opacity duration-1000">
-            <div class="text-center z-10 space-y-16">
-                <h1 class="font-maglite text-3xl font-light tracking-widest text-[#D4AF37]/90 uppercase">L'Écrin</h1>
+        <div id="screen-awakening" class="absolute inset-0 flex flex-col items-center justify-center bg-[#161311] z-50 transition-opacity duration-1000">
+            <div class="absolute inset-0 bg-gradient-to-b from-[#2a221d] to-[#0c0b0a] opacity-80 mix-blend-multiply"></div>
+            <div class="text-center z-10 space-y-16 pt-safe">
+                <h1 class="font-maglite text-3xl font-light tracking-widest text-luxury uppercase drop-shadow-md">L'Écrin</h1>
                 
                 <div class="relative flex justify-center items-center h-48" id="nfc-area">
-                    <!-- Default NFC Button -->
-                    <button id="nfc-btn" class="nfc-ring w-24 h-24 rounded-full border border-[#D4AF37]/50 flex items-center justify-center bg-[#D4AF37]/10 backdrop-blur-md transition-all hover:bg-[#D4AF37]/20 cursor-pointer">
-                        <i data-lucide="sparkles" class="w-8 h-8 text-[#D4AF37]"></i>
+                    <button id="nfc-btn" class="nfc-ring w-24 h-24 rounded-full border border-[#C8A97E]/40 flex items-center justify-center bg-[#C8A97E]/5 backdrop-blur-md transition-all hover:bg-[#C8A97E]/15 cursor-pointer">
+                        <i data-lucide="sparkles" class="w-8 h-8 text-luxury"></i>
                     </button>
                     
-                    <!-- Awaking Animation Container (Hidden initially) -->
                     <div id="awaking-animation" class="hidden relative">
-                        <div class="w-32 h-32 rounded-full bg-[#D4AF37] opacity-20 animate-[ping_1.5s_cubic-bezier(0,0,0.2,1)_infinite]"></div>
-                        <!-- Dust particles generated by JS -->
+                        <div class="w-32 h-32 rounded-full bg-luxury opacity-10 animate-[ping_1.5s_cubic-bezier(0,0,0.2,1)_infinite]"></div>
                         <div id="dust-particles"></div>
                     </div>
                 </div>
@@ -99,173 +143,348 @@
                     Tap your "L'Écrin" on the back of your phone to awaken the senses.
                 </p>
             </div>
-            <!-- Ambient background gradient -->
-            <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#D4AF37]/10 via-black to-black opacity-60"></div>
         </div>
 
         <!-- ========================================== -->
         <!-- MAIN APP WRAPPER                           -->
         <!-- ========================================== -->
-        <div id="app-wrapper" class="flex-1 flex flex-col h-full opacity-0 transition-opacity duration-1000">
+        <div id="app-wrapper" class="flex-1 flex flex-col h-full opacity-0 transition-opacity duration-1000 z-10">
             
-            <!-- App Header -->
-            <header class="pt-12 pb-4 px-6 flex justify-between items-center bg-gradient-to-b from-black to-transparent z-10 shrink-0">
-                <h2 id="header-title" class="font-maglite text-xl text-[#D4AF37] tracking-widest uppercase">L'Écrin</h2>
-                <button class="p-2 text-neutral-400 hover:text-[#D4AF37] transition-colors">
-                    <i data-lucide="settings" class="w-5 h-5"></i>
-                </button>
+            <!-- App Header (iPhone Safe Area applied) -->
+            <header class="pt-safe pb-2 px-6 flex justify-between items-center z-20 shrink-0">
+                <div class="flex flex-col mt-2">
+                    <span id="header-subtitle" class="text-[9px] text-neutral-400 uppercase tracking-widest mb-1">Welcome back</span>
+                    <h2 id="header-title" class="font-maglite text-2xl text-luxury tracking-wide drop-shadow-sm">Sarah Kim</h2>
+                </div>
+                <div class="w-10 h-10 mt-2 rounded-full bg-neutral-800 border border-[#C8A97E]/40 overflow-hidden cursor-pointer hover:border-[#C8A97E] transition-colors shadow-md" onclick="changeScreen('profile')">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Sarah Kim" class="w-full h-full object-cover opacity-90">
+                </div>
             </header>
 
-            <!-- Content Area -->
-            <main class="flex-1 overflow-y-auto pb-24 scrollbar-hide relative">
+            <!-- Content Area (Scrollable with bottom padding to clear nav bar) -->
+            <main class="flex-1 overflow-y-auto scrollbar-hide w-full" style="padding-bottom: calc(90px + env(safe-area-inset-bottom)); -webkit-overflow-scrolling: touch;">
                 
                 <!-- SCREEN 2: THE DASHBOARD -->
-                <div id="view-dashboard" class="hidden flex-col items-center justify-center h-full animate-in">
+                <!-- Changed h-full to min-h-full for better scrolling -->
+                <div id="view-dashboard" class="hidden flex-col items-center justify-start min-h-full animate-in w-full pb-8">
                     
                     <!-- 3D Charm Display & Cores -->
-                    <div class="relative w-72 h-72 flex items-center justify-center mt-4">
-                        <!-- Background Glow based on active scent -->
-                        <div id="dashboard-glow" class="absolute inset-0 rounded-full blur-3xl opacity-20 transition-colors duration-1000"></div>
+                    <!-- Đã tăng h-[340px] lên h-[380px] và mt-2 lên mt-8 để tránh bị cắt mất ống trên cùng -->
+                    <div class="relative w-full h-[380px] flex items-center justify-center mt-8 shrink-0">
+                        <div id="dashboard-glow" class="absolute inset-0 rounded-full blur-[60px] opacity-10 transition-colors duration-1000"></div>
 
                         <!-- The Bag Charm -->
-                        <div class="z-10 w-40 h-48 rounded-3xl bg-gradient-to-br from-red-900 via-rose-950 to-black border border-red-900/50 shadow-2xl flex items-center justify-center relative overflow-hidden group cursor-pointer">
-                            <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/leather.png')]"></div>
-                            <div class="w-16 h-16 rounded-full border-2 border-[#D4AF37]/50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-                                <span class="font-maglite text-[#D4AF37] text-2xl font-light">L</span>
+                        <div class="z-10 w-32 h-44 rounded-2xl bg-[#0c0a09] border border-[#2a2420] shadow-[0_20px_50px_rgba(0,0,0,0.9)] flex items-center justify-center relative overflow-hidden group cursor-pointer ring-1 ring-[#C8A97E]/30">
+                            <!-- Leather texture overlay -->
+                            <div class="absolute inset-0 opacity-40 bg-[url('https://www.transparenttextures.com/patterns/leather.png')] mix-blend-overlay"></div>
+                            <!-- Scanning Laser -->
+                            <div id="scan-line" class="absolute left-0 w-full h-0.5 bg-luxury opacity-0 shadow-[0_0_20px_#C8A97E] z-20 pointer-events-none hidden"></div>
+                            
+                            <!-- Central L Logo -->
+                            <div class="w-12 h-12 rounded-full border border-luxury flex items-center justify-center bg-gradient-to-br from-[#1a1512] to-black backdrop-blur-md z-10 shadow-inner">
+                                <span class="font-maglite text-luxury text-lg font-light">L</span>
                             </div>
-                            <div class="absolute top-2 w-8 h-2 border border-[#D4AF37]/50 rounded-full bg-[#D4AF37]/10"></div>
+                            <!-- Gold Hardware Hook -->
+                            <div class="absolute top-0 w-10 h-2.5 border-b border-x border-[#C8A97E]/70 rounded-b-xl bg-gradient-to-b from-[#C8A97E]/40 to-transparent z-10"></div>
                         </div>
 
-                        <!-- Cores injected via JS - Using inset-0 and pointer-events-none for perfect absolute centering -->
+                        <!-- Cores injected via JS - Elliptical Orbit -->
                         <div id="dashboard-cores-container" class="absolute inset-0 pointer-events-none"></div>
                     </div>
 
                     <!-- Status & Details -->
-                    <div class="mt-6 text-center w-full pb-6">
-                        <p class="text-[10px] tracking-widest text-neutral-500 uppercase mb-2">Currently Diffusing</p>
-                        <h3 id="dashboard-frag-name" class="font-maglite text-2xl text-[#D4AF37] font-light px-4 transition-all duration-500 mb-2"></h3>
-                        <p id="dashboard-frag-desc" class="text-sm font-light text-neutral-400 px-8 leading-relaxed line-clamp-2 min-h-[40px]"></p>
+                    <div class="mt-2 text-center w-full px-6 flex flex-col items-center">
+                        <div id="dashboard-frag-brand" class="text-[10px] text-neutral-400 mb-1 opacity-80 tracking-widest"></div>
+                        <h3 id="dashboard-frag-name" class="font-maglite text-2xl text-luxury font-light px-4 transition-all duration-500 mb-1"></h3>
+                        <p class="text-[9px] tracking-[0.2em] text-neutral-500 uppercase mb-5">Currently Diffusing</p>
                         
-                        <!-- Contextual Intelligence Grid (Biometrics & Environment) -->
-                        <div class="grid grid-cols-2 gap-3 w-full max-w-[320px] mx-auto mt-6 text-left px-4">
-                            <!-- Heart Rate -->
-                            <div class="flex items-center gap-3 p-3 rounded-2xl border border-white/5 bg-gradient-to-br from-white/[0.05] to-transparent backdrop-blur-md">
-                                <div class="p-2 rounded-full bg-[#D4AF37]/10">
-                                    <i data-lucide="heart-pulse" class="w-4 h-4 text-[#D4AF37]"></i>
-                                </div>
+                        <!-- Contextual Intelligence Grid -->
+                        <div class="grid grid-cols-2 gap-3 w-full max-w-[340px] text-left">
+                            <div class="flex items-center gap-3 p-3 rounded-2xl border border-white/5 bg-white/[0.02] backdrop-blur-md">
+                                <div class="p-2 rounded-full bg-rose-500/10"><i data-lucide="heart-pulse" class="w-4 h-4 text-rose-400"></i></div>
                                 <div class="flex flex-col">
                                     <span class="text-[9px] text-neutral-500 uppercase tracking-widest">Heart Rate</span>
-                                    <span class="text-xs text-neutral-200 font-medium">72 bpm</span>
+                                    <span id="val-hr" class="text-xs text-neutral-200 font-medium">-- bpm</span>
                                 </div>
                             </div>
-                            <!-- Body Temp -->
-                            <div class="flex items-center gap-3 p-3 rounded-2xl border border-white/5 bg-gradient-to-br from-white/[0.05] to-transparent backdrop-blur-md">
-                                <div class="p-2 rounded-full bg-[#D4AF37]/10">
-                                    <i data-lucide="thermometer" class="w-4 h-4 text-[#D4AF37]"></i>
-                                </div>
+                            <div class="flex items-center gap-3 p-3 rounded-2xl border border-white/5 bg-white/[0.02] backdrop-blur-md">
+                                <div class="p-2 rounded-full bg-purple-500/10"><i data-lucide="brain" class="w-4 h-4 text-purple-400"></i></div>
                                 <div class="flex flex-col">
-                                    <span class="text-[9px] text-neutral-500 uppercase tracking-widest">Body Temp</span>
-                                    <span class="text-xs text-neutral-200 font-medium">36.5°C</span>
+                                    <span class="text-[9px] text-neutral-500 uppercase tracking-widest">Stress Index</span>
+                                    <span id="val-stress" class="text-xs text-neutral-200 font-medium">--</span>
                                 </div>
                             </div>
-                            <!-- Environment -->
-                            <div class="flex items-center gap-3 p-3 rounded-2xl border border-white/5 bg-gradient-to-br from-white/[0.05] to-transparent backdrop-blur-md">
-                                <div class="p-2 rounded-full bg-[#D4AF37]/10">
-                                    <i data-lucide="cloud-sun" class="w-4 h-4 text-[#D4AF37]"></i>
-                                </div>
+                            <div class="flex items-center gap-3 p-3 rounded-2xl border border-white/5 bg-white/[0.02] backdrop-blur-md">
+                                <div class="p-2 rounded-full bg-blue-500/10"><i data-lucide="droplets" class="w-4 h-4 text-blue-400"></i></div>
                                 <div class="flex flex-col">
-                                    <span class="text-[9px] text-neutral-500 uppercase tracking-widest">Weather</span>
-                                    <span class="text-xs text-neutral-200 font-medium">24°C, Clear</span>
+                                    <span class="text-[9px] text-neutral-500 uppercase tracking-widest">Hydration</span>
+                                    <span id="val-hydra" class="text-xs text-neutral-200 font-medium">-- %</span>
                                 </div>
                             </div>
-                            <!-- Spotify -->
-                            <div class="flex items-center gap-3 p-3 rounded-2xl border border-white/5 bg-gradient-to-br from-white/[0.05] to-transparent backdrop-blur-md">
-                                <div class="p-2 rounded-full bg-[#1DB954]/10">
-                                    <i data-lucide="music" class="w-4 h-4 text-[#1DB954]"></i>
-                                </div>
+                            <div class="flex items-center gap-3 p-3 rounded-2xl border border-white/5 bg-white/[0.02] backdrop-blur-md overflow-hidden">
+                                <div class="p-2 rounded-full bg-[#1DB954]/10"><i data-lucide="music" class="w-4 h-4 text-[#1DB954]"></i></div>
                                 <div class="flex flex-col overflow-hidden w-full">
                                     <span class="text-[9px] text-neutral-500 uppercase tracking-widest">Spotify</span>
-                                    <span class="text-xs text-neutral-200 font-medium truncate">Clair de Lune</span>
+                                    <span class="text-[11px] text-neutral-200 font-medium truncate">Clair de Lune</span>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Swipe Indicator -->
-                        <div id="dashboard-indicators" class="flex justify-center gap-2 mt-6"></div>
+                        <!-- Scan Action -->
+                        <button id="scan-btn" onclick="simulateBioScan()" class="mt-6 px-8 py-3.5 rounded-full border border-[#C8A97E]/40 bg-gradient-to-r from-[#C8A97E]/10 to-transparent text-luxury text-[10px] font-bold tracking-widest uppercase hover:bg-[#C8A97E]/20 transition-all flex items-center justify-center gap-2 shadow-lg w-full max-w-[340px]">
+                            <i data-lucide="fingerprint" class="w-4 h-4"></i> Analyze Bio-Data & Guide
+                        </button>
+
+                        <!-- AI Recommendation Card (Hidden initially) -->
+                        <div id="ai-recommendation" class="hidden w-full max-w-[340px] mt-4 p-4 rounded-2xl border border-luxury/30 bg-luxury/5 backdrop-blur-md text-left animate-in">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-[9px] font-bold tracking-widest uppercase text-luxury flex items-center gap-1">
+                                    <i data-lucide="sparkles" class="w-3 h-3"></i> AI Scent Guide
+                                </span>
+                                <span class="text-[8px] text-neutral-500">Just Now</span>
+                            </div>
+                            <p class="text-xs text-neutral-300 font-light leading-relaxed mb-3">
+                                High stress detected. Switch to <span class="text-white font-medium">Prada Paradoxe</span> to lower heart rate with calming Neroli notes.
+                            </p>
+                            <button onclick="selectFragrance(3)" class="w-full py-2 bg-luxury/20 border border-luxury/50 text-luxury rounded-full text-[10px] uppercase tracking-widest hover:bg-luxury hover:text-black transition-colors">
+                                Switch Scent Now
+                            </button>
+                        </div>
                     </div>
                 </div>
 
                 <!-- SCREEN 3: THE ATELIER -->
-                <div id="view-atelier" class="hidden flex-col items-center h-full px-6 pt-4 animate-in">
-                    <p class="text-sm font-light text-neutral-400 tracking-wide text-center mb-10">
-                        Master your senses. Blend cores to create your bespoke signature.
+                <div id="view-atelier" class="hidden flex-col items-center min-h-full px-6 pt-4 animate-in w-full">
+                    <p class="text-[11px] font-light text-neutral-400 tracking-wider text-center mb-8 uppercase px-4 leading-relaxed">
+                        Curate your aura. Choose your signature scent or let the intelligent schedule adapt to your day.
                     </p>
 
-                    <!-- Planetary Orbit Concept -->
-                    <div class="relative w-80 h-80 flex items-center justify-center group mt-4 mb-4">
-                        
-                        <!-- Orbit Rings (Aesthetic) -->
-                        <div class="absolute inset-0 rounded-full border border-neutral-800/30 m-4 pointer-events-none"></div>
-                        <div class="absolute inset-0 rounded-full border border-neutral-800/10 m-10 pointer-events-none"></div>
+                    <div class="relative w-72 h-72 flex items-center justify-center group mt-2 mb-6 shrink-0">
+                        <div class="absolute inset-0 rounded-full border border-neutral-800/40 m-2 pointer-events-none"></div>
+                        <div class="absolute inset-0 rounded-full border border-neutral-800/10 m-8 pointer-events-none"></div>
 
-                        <!-- Rotating Orbit Container injected via JS -->
-                        <div id="atelier-orbit-container" class="absolute inset-0 animate-[orbit_40s_linear_infinite] group-hover:[animation-play-state:paused] z-10">
+                        <div id="atelier-orbit-container" class="absolute inset-0 animate-[orbit_40s_linear_infinite] group-hover:[animation-play-state:paused] z-10"></div>
+
+                        <button id="activate-btn" class="z-20 w-28 h-28 rounded-full bg-gradient-to-br from-[#C8A97E] to-[#997a50] border-4 border-[#161311] shadow-[0_0_40px_rgba(200,169,126,0.2)] flex flex-col items-center justify-center active:scale-95 transition-all overflow-hidden relative hover:shadow-[0_0_50px_rgba(200,169,126,0.3)] cursor-pointer">
+                            <i data-lucide="wind" class="w-7 h-7 text-[#FFF8E7] mb-1 transition-transform"></i>
+                            <span class="font-maglite text-xs tracking-widest text-white font-medium">ACTIVATE</span>
+                        </button>
+                    </div>
+
+                    <div class="mt-2 text-center w-full">
+                        <h3 id="atelier-frag-name" class="font-maglite text-2xl text-luxury mb-1"></h3>
+                        <p id="atelier-frag-type" class="text-[10px] text-neutral-500 uppercase tracking-widest"></p>
+                    </div>
+
+                    <div class="mt-8 w-full max-w-[340px] bg-neutral-900/40 p-1.5 rounded-2xl flex justify-between border border-neutral-800/60 z-20 shrink-0">
+                        <button class="flex-1 py-3 px-1 rounded-xl bg-neutral-800 text-luxury text-[9px] uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-inner border border-neutral-700/50">
+                            <i data-lucide="droplet" class="w-3.5 h-3.5"></i> Manual
+                        </button>
+                        <button class="flex-1 py-3 px-1 rounded-xl text-neutral-400 hover:text-white text-[9px] uppercase tracking-wider flex items-center justify-center gap-1.5 transition-colors">
+                            <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> Locations
+                        </button>
+                        <button class="flex-1 py-3 px-1 rounded-xl text-neutral-400 hover:text-white text-[9px] uppercase tracking-wider flex items-center justify-center gap-1.5 transition-colors">
+                            <i data-lucide="calendar-clock" class="w-3.5 h-3.5"></i> Schedule
+                        </button>
+                    </div>
+
+                    <!-- Olfactory Log -->
+                    <div class="w-full max-w-[340px] mt-8 text-left pb-6">
+                        <h4 class="text-[10px] font-bold tracking-widest uppercase text-neutral-500 mb-4 px-2">Olfactory Log</h4>
+                        <div class="space-y-3">
+                            <div class="bg-white/[0.02] border border-white/5 p-4 rounded-2xl flex items-start gap-3 backdrop-blur-sm">
+                                <div class="w-2 h-2 mt-1.5 rounded-full bg-[#E5C07B] shadow-[0_0_8px_#E5C07B]"></div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-center mb-1">
+                                        <span class="font-maglite text-sm text-white">YSL Libre</span>
+                                        <span class="text-[9px] text-neutral-500 uppercase">Today, 08:30 AM</span>
+                                    </div>
+                                    <p class="text-[10px] text-neutral-400 font-light leading-snug">
+                                        Manual spray. <br/>Bio-stats: HR 65bpm, Stress: Low. Focus mode active.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="bg-white/[0.02] border border-white/5 p-4 rounded-2xl flex items-start gap-3 backdrop-blur-sm">
+                                <div class="w-2 h-2 mt-1.5 rounded-full bg-[#CD853F] shadow-[0_0_8px_#CD853F]"></div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-center mb-1">
+                                        <span class="font-maglite text-sm text-white">Replica Jazz Club</span>
+                                        <span class="text-[9px] text-neutral-500 uppercase">Yesterday, 19:45 PM</span>
+                                    </div>
+                                    <p class="text-[10px] text-neutral-400 font-light leading-snug">
+                                        Scheduled evening aura. <br/>Bio-stats: HR 72bpm, Spotify: Jazz Playlist.
+                                    </p>
+                                </div>
+                            </div>
                         </div>
-
-                        <!-- Central Activate Button -->
-                        <button id="activate-btn" class="z-20 w-32 h-32 rounded-full bg-gradient-to-br from-[#D4AF37] to-[#8C6D23] border-4 border-black shadow-[0_0_30px_rgba(212,175,55,0.2)] flex flex-col items-center justify-center active:scale-95 transition-all overflow-hidden relative hover:shadow-[0_0_40px_rgba(212,175,55,0.4)] cursor-pointer">
-                            <i data-lucide="wind" class="w-8 h-8 text-[#FFF8E7] mb-1 transition-transform"></i>
-                            <span class="font-maglite text-sm tracking-widest text-white font-medium">ACTIVATE</span>
-                        </button>
-                    </div>
-
-                    <div class="mt-8 text-center w-full">
-                        <h3 id="atelier-frag-name" class="font-maglite text-xl text-[#D4AF37] mb-1"></h3>
-                        <p id="atelier-frag-type" class="text-xs text-neutral-500 uppercase tracking-widest"></p>
-                    </div>
-
-                    <!-- Modes -->
-                    <div class="mt-12 w-full max-w-sm bg-neutral-900/50 p-1 rounded-2xl flex justify-between border border-neutral-800/50 z-20">
-                        <button class="flex-1 py-3 px-2 rounded-xl bg-neutral-800 text-[#D4AF37] text-xs tracking-wider flex items-center justify-center gap-2 shadow-inner border border-neutral-700/50">
-                            <i data-lucide="droplet" class="w-4 h-4"></i> Single
-                        </button>
-                        <button class="flex-1 py-3 px-2 rounded-xl text-neutral-400 hover:text-white text-xs tracking-wider flex items-center justify-center gap-2 transition-colors">
-                            <i data-lucide="sliders-horizontal" class="w-4 h-4"></i> Blend
-                        </button>
-                        <button class="flex-1 py-3 px-2 rounded-xl text-neutral-400 hover:text-white text-xs tracking-wider flex items-center justify-center gap-2 transition-colors">
-                            <i data-lucide="clock" class="w-4 h-4"></i> Schedule
-                        </button>
                     </div>
                 </div>
 
                 <!-- SCREEN 4: THE BOUTIQUE -->
-                <div id="view-boutique" class="hidden flex-col h-full animate-in">
+                <div id="view-boutique" class="hidden flex-col min-h-full animate-in w-full">
                     <!-- Populated via JS -->
                 </div>
+
+                <!-- SCREEN 5: COMMUNITY -->
+                <div id="view-community" class="hidden flex-col min-h-full px-6 pt-4 animate-in w-full">
+                    <p class="text-xs font-light text-neutral-400 mb-6 text-center tracking-wide">Discover the art of perfumery with the L'Écrin Community.</p>
+                    
+                    <div class="space-y-6 pb-6 w-full max-w-[360px] mx-auto">
+                        <!-- Post 1: Real Rose field image -->
+                        <div class="bg-neutral-900/30 rounded-3xl overflow-hidden border border-neutral-800/60 backdrop-blur-sm">
+                            <img src="https://images.unsplash.com/photo-1496062031456-07b8f162a322?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Grasse Rose Field" class="w-full h-48 object-cover opacity-90 transition-transform hover:scale-105 duration-700">
+                            <div class="p-5">
+                                <span class="text-[9px] text-luxury uppercase tracking-widest font-semibold">Masterclass</span>
+                                <h4 class="font-maglite text-lg text-white mt-1 mb-2">The Secrets of Grasse Rose</h4>
+                                <p class="text-[11px] text-neutral-400 line-clamp-2 leading-relaxed font-light">Explore why Lancôme and YSL source their most precious blooms from the perfume capital of the world.</p>
+                                <div class="mt-4 flex items-center gap-2 text-neutral-500 text-[10px] uppercase tracking-wider">
+                                    <i data-lucide="heart" class="w-3 h-3"></i> 1.2k Likes
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Post 2: Metallic / Mechanism imagery for device care -->
+                        <div class="bg-neutral-900/30 rounded-3xl overflow-hidden border border-neutral-800/60 backdrop-blur-sm">
+                            <img src="https://images.unsplash.com/photo-1610992015732-2449b76344bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Refill Guide Mechanism" class="w-full h-48 object-cover opacity-90 transition-transform hover:scale-105 duration-700">
+                            <div class="p-5">
+                                <span class="text-[9px] text-luxury uppercase tracking-widest font-semibold">Device Care</span>
+                                <h4 class="font-maglite text-lg text-white mt-1 mb-2">How to Swap Scent Slices</h4>
+                                <p class="text-[11px] text-neutral-400 line-clamp-2 leading-relaxed font-light">A step-by-step visual guide to replacing your empty fragrance slices without compromising the scent integrity.</p>
+                                <div class="mt-4 flex items-center gap-2 text-neutral-500 text-[10px] uppercase tracking-wider">
+                                    <i data-lucide="heart" class="w-3 h-3"></i> 842 Likes
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SCREEN 6: PROFILE & SCENT WRAP -->
+                <div id="view-profile" class="hidden flex-col min-h-full px-6 pt-4 animate-in w-full">
+                    
+                    <div class="flex flex-col items-center mt-2 mb-8">
+                        <div class="w-24 h-24 rounded-full bg-neutral-800 border-2 border-luxury overflow-hidden mb-4 relative p-1 shadow-[0_0_20px_rgba(200,169,126,0.2)]">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Sarah Kim" class="w-full h-full object-cover rounded-full">
+                            <button class="absolute bottom-0 inset-x-0 bg-black/80 text-[8px] uppercase tracking-widest py-1.5 text-center text-white backdrop-blur-sm transition-colors hover:bg-black">Edit</button>
+                        </div>
+                    </div>
+
+                    <!-- Redesigned AI Scent Wrap -->
+                    <div class="w-full max-w-[360px] mx-auto mb-8">
+                        <div class="flex justify-between items-end mb-3 px-1">
+                            <div>
+                                <h4 class="font-maglite text-xl text-white">Your Olfactory Journey</h4>
+                                <p class="text-[9px] uppercase tracking-widest text-luxury font-semibold mt-1">AI Scent Wrap</p>
+                            </div>
+                            <!-- Time Tabs -->
+                            <div class="flex gap-2 text-[9px] uppercase tracking-widest font-bold">
+                                <span class="text-white border-b border-luxury pb-0.5 cursor-pointer">W</span>
+                                <span class="text-neutral-600 hover:text-neutral-400 cursor-pointer">M</span>
+                                <span class="text-neutral-600 hover:text-neutral-400 cursor-pointer">Y</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-[#C8A97E]/30 to-transparent p-[1px] rounded-3xl">
+                            <div class="bg-[#161311]/95 backdrop-blur-md rounded-3xl p-5 relative overflow-hidden">
+                                <div class="absolute -top-4 -right-4 p-4 opacity-10">
+                                    <i data-lucide="sparkles" class="w-24 h-24 text-luxury"></i>
+                                </div>
+                                <div class="flex gap-4 items-center mb-4">
+                                    <div class="text-center">
+                                        <div class="text-2xl font-maglite text-white">12</div>
+                                        <div class="text-[8px] uppercase tracking-widest text-neutral-500">Sprays</div>
+                                    </div>
+                                    <div class="w-[1px] h-8 bg-white/10"></div>
+                                    <div class="text-left">
+                                        <div class="text-sm font-medium text-luxury truncate">Floral Lavender</div>
+                                        <div class="text-[8px] uppercase tracking-widest text-neutral-500">Top Accord</div>
+                                    </div>
+                                </div>
+                                <p class="text-xs font-light text-neutral-300 leading-relaxed mb-4">
+                                    This week, you leaned heavily into <span class="text-white font-medium">Woody</span> scents during evening focus times, and <span class="text-white font-medium">Fresh Florals</span> for mornings.
+                                </p>
+                                <button class="w-full py-2.5 rounded-full bg-white/5 border border-white/10 text-[9px] uppercase tracking-widest text-white hover:bg-white/10 transition-colors flex items-center justify-center gap-2">
+                                    <i data-lucide="play-circle" class="w-3.5 h-3.5 text-luxury"></i> Play Full Wrap
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Luxury Standard Profile Sections -->
+                    <div class="w-full max-w-[360px] mx-auto space-y-2 pb-6">
+                        <h4 class="text-[10px] uppercase tracking-widest text-neutral-500 mb-3 px-2">Account & Services</h4>
+                        
+                        <div class="flex items-center justify-between bg-white/[0.02] p-4 rounded-2xl border border-white/5 cursor-pointer hover:bg-white/[0.04] transition-colors">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="box" class="w-4 h-4 text-neutral-400"></i>
+                                <span class="text-xs text-neutral-200 font-medium">My Vault (Collection)</span>
+                            </div>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-neutral-600"></i>
+                        </div>
+                        
+                        <div class="flex items-center justify-between bg-white/[0.02] p-4 rounded-2xl border border-white/5 cursor-pointer hover:bg-white/[0.04] transition-colors">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="crown" class="w-4 h-4 text-luxury"></i>
+                                <span class="text-xs text-luxury font-medium">L'Écrin Privileges</span>
+                            </div>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-neutral-600"></i>
+                        </div>
+
+                        <div class="flex items-center justify-between bg-white/[0.02] p-4 rounded-2xl border border-white/5 cursor-pointer hover:bg-white/[0.04] transition-colors">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="receipt" class="w-4 h-4 text-neutral-400"></i>
+                                <span class="text-xs text-neutral-200 font-medium">Order History & Refills</span>
+                            </div>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-neutral-600"></i>
+                        </div>
+
+                        <div class="flex items-center justify-between bg-white/[0.02] p-4 rounded-2xl border border-white/5 cursor-pointer hover:bg-white/[0.04] transition-colors">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="message-square" class="w-4 h-4 text-neutral-400"></i>
+                                <span class="text-xs text-neutral-200 font-medium">Concierge Services</span>
+                            </div>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-neutral-600"></i>
+                        </div>
+                    </div>
+                </div>
+
             </main>
 
-            <!-- App Bottom Navigation Bar -->
-            <nav class="fixed bottom-0 left-0 right-0 mx-auto w-full max-w-md bg-black/90 backdrop-blur-md border-t border-neutral-900 pb-safe z-50">
-                <div class="flex justify-around items-center h-20 px-6">
-                    <button onclick="changeScreen('dashboard')" id="nav-dashboard" class="flex flex-col items-center gap-1.5 transition-colors text-[#D4AF37]">
-                        <div id="nav-icon-dashboard" class="p-2 rounded-xl transition-all bg-[#D4AF37]/20">
-                            <i data-lucide="check-circle-2" class="w-6 h-6"></i>
+            <!-- App Bottom Navigation Bar (iPhone Safe Area Applied) -->
+            <nav class="fixed bottom-0 left-0 right-0 mx-auto w-full max-w-md bg-[#161311]/95 backdrop-blur-xl border-t border-white/5 pb-safe z-50">
+                <div class="flex justify-between items-center h-[70px] px-3">
+                    <button onclick="changeScreen('dashboard')" id="nav-dashboard" class="flex flex-col items-center gap-1 transition-colors text-luxury w-[20%]">
+                        <div id="nav-icon-dashboard" class="p-1.5 rounded-xl transition-all bg-[#C8A97E]/10">
+                            <i data-lucide="cpu" class="w-5 h-5"></i>
                         </div>
-                        <span class="text-[10px] tracking-widest uppercase font-medium">Status</span>
+                        <span class="text-[8px] tracking-widest uppercase font-medium">Status</span>
                     </button>
 
-                    <button onclick="changeScreen('atelier')" id="nav-atelier" class="flex flex-col items-center gap-1.5 transition-colors text-neutral-600 hover:text-neutral-400">
-                        <div id="nav-icon-atelier" class="p-2 rounded-xl transition-all">
-                            <i data-lucide="settings" class="w-6 h-6"></i>
+                    <button onclick="changeScreen('atelier')" id="nav-atelier" class="flex flex-col items-center gap-1 transition-colors text-neutral-500 hover:text-neutral-300 w-[20%]">
+                        <div id="nav-icon-atelier" class="p-1.5 rounded-xl transition-all">
+                            <i data-lucide="settings-2" class="w-5 h-5"></i>
                         </div>
-                        <span class="text-[10px] tracking-widest uppercase font-medium">The Atelier</span>
+                        <span class="text-[8px] tracking-widest uppercase font-medium">Atelier</span>
                     </button>
 
-                    <button onclick="changeScreen('boutique')" id="nav-boutique" class="flex flex-col items-center gap-1.5 transition-colors text-neutral-600 hover:text-neutral-400">
-                        <div id="nav-icon-boutique" class="p-2 rounded-xl transition-all">
-                            <i data-lucide="shopping-bag" class="w-6 h-6"></i>
+                    <button onclick="changeScreen('boutique')" id="nav-boutique" class="flex flex-col items-center gap-1 transition-colors text-neutral-500 hover:text-neutral-300 w-[20%]">
+                        <div id="nav-icon-boutique" class="p-1.5 rounded-xl transition-all">
+                            <i data-lucide="store" class="w-5 h-5"></i>
                         </div>
-                        <span class="text-[10px] tracking-widest uppercase font-medium">Boutique</span>
+                        <span class="text-[8px] tracking-widest uppercase font-medium">Boutique</span>
+                    </button>
+
+                    <button onclick="changeScreen('community')" id="nav-community" class="flex flex-col items-center gap-1 transition-colors text-neutral-500 hover:text-neutral-300 w-[20%]">
+                        <div id="nav-icon-community" class="p-1.5 rounded-xl transition-all">
+                            <i data-lucide="users" class="w-5 h-5"></i>
+                        </div>
+                        <span class="text-[8px] tracking-widest uppercase font-medium">Community</span>
+                    </button>
+
+                    <button onclick="changeScreen('profile')" id="nav-profile" class="flex flex-col items-center gap-1 transition-colors text-neutral-500 hover:text-neutral-300 w-[20%]">
+                        <div id="nav-icon-profile" class="p-1.5 rounded-xl transition-all">
+                            <i data-lucide="user" class="w-5 h-5"></i>
+                        </div>
+                        <span class="text-[8px] tracking-widest uppercase font-medium">Profile</span>
                     </button>
                 </div>
             </nav>
@@ -274,18 +493,19 @@
 
     <!-- Application Logic -->
     <script>
-        // --- DATA MOCKUP ---
+        // --- REAL PRODUCT IMAGES (HIGH STABILITY MACY'S CDN) ---
         const fragrances = [
-            { id: 1, name: 'No.1 - Rose de Mai', type: 'Floral', color: '#FFB6C1', level: 85, description: 'The radiant blooming of freshly handpicked early morning roses in Grasse.', notes: { top: 'Bergamot, Pink Pepper', heart: 'Rose de Mai, Peony', base: 'White Musk, Cedarwood' }, image: 'https://images.unsplash.com/photo-1559564484-e48b3e040ff4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-            { id: 2, name: 'No.2 - Santal Nuit', type: 'Woody', color: '#8B4513', level: 40, description: 'A warm and deep sandalwood fragrance, carrying the breath of a mystical night.', notes: { top: 'Cardamom, Cypress', heart: 'Sandalwood, Frankincense', base: 'Vetiver, Leather' }, image: 'https://images.unsplash.com/photo-1611078813455-cb091461bce9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-            { id: 3, name: 'No.3 - Midnight Jasmine', type: 'Floral Oriental', color: '#4B0082', level: 60, description: 'An intoxicating symphony of jasmine blooming under the moonlight.', notes: { top: 'Orange Blossom, Almond', heart: 'Sambac Jasmine, Tuberose', base: 'Vanilla, Amber' }, image: 'https://images.unsplash.com/photo-1548263594-a71ea65a8598?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-            { id: 4, name: 'No.4 - Aqua Flora', type: 'Fresh', color: '#5F9EA0', level: 95, description: 'A cool sea breeze intertwined with pure water lily.', notes: { top: 'Marine Notes, Lemon', heart: 'Water Lily, Lily of the Valley', base: 'Oakmoss, Musk' }, image: 'https://images.unsplash.com/photo-1505235687559-28b5f54645b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-            { id: 5, name: 'No.5 - Oud Majesté', type: 'Oriental', color: '#B8860B', level: 15, description: 'The majestic presence of rare oud, powerful and captivating.', notes: { top: 'Saffron, Raspberry', heart: 'Rose, Oud', base: 'Patchouli, Myrrh' }, image: 'https://images.unsplash.com/photo-1605648833076-0bf170889c25?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' }
+            { id: 1, brand: 'YSL', logoClass: 'brand-logo-ysl', brandDisplay: 'YVES SAINT LAURENT', name: 'Libre Eau de Parfum', type: 'Floral Lavender', color: '#E5C07B', level: 85, description: 'A grand floral Eau de Parfum with an unequivocal YSL twist. The burning sensuality of the orange blossom flowers from Morocco, twisted with the aromatic boldness of lavender from France.', notes: { top: 'Mandarin, Neroli', heart: 'Lavender, Orange Blossom', base: 'Vanilla Extract, Musk' }, image: 'https://cdn.vuahanghieu.com/unsafe/0x900/left/top/smart/filters:quality(90)/https://admin.vuahanghieu.com/upload/product/Laurent%20Libre/Laurent%20Libre.jpg' },
+            { id: 2, brand: 'Lancôme', logoClass: 'brand-logo-lancome', brandDisplay: 'LANCÔME', name: 'La Vie Est Belle', type: 'Floral Gourmand', color: '#F4C2C2', level: 40, description: 'Known as the "crystal smile", this Eau de Parfum is an ode to happiness. The fragrance features spun sugar, warm vanilla, and sweet praline.', notes: { top: 'Iris, Pear, Blackberry', heart: 'Jasmine, Orange Blossom', base: 'Patchouli, Vanilla, Praline' }, image: 'https://www.lancome.vn/dw/image/v2/BFZM_PRD/on/demandware.static/-/Sites-lancome-ng-master-catalog/default/dw08156d4b/images/Root_Perfume/00027-LAC/La-Vie-Est-Belle-edp-75ML-3605532612836.jpg?sw=698&sh=698&sm=cut&sfrm=jpg&q=70' },
+            { id: 3, brand: 'Prada', logoClass: 'brand-logo-prada', brandDisplay: 'PRADA', name: 'Paradoxe', type: 'Floral Amber', color: '#FFB6C1', level: 60, description: 'A floral ambery fragrance that embraces the paradoxes of iconic ingredients to reveal new scented sensations. Featuring a Neroli bud extraction, amber accords, and white musk.', notes: { top: 'Neroli Bud, Bergamot', heart: 'Jasmine, Amber', base: 'White Musk' }, image: 'https://www.prada-beauty.com/dw/image/v2/AAFM_PRD/on/demandware.static/-/Sites-prada-master-catalog/default/dw5ca9e5dc/fragrance/women/MPL01610/2025/Part%202/3614273760164.jpg?sw=930&sh=930&sm=cut&sfrm=jpg&q=70' },
+            { id: 4, brand: 'Valentino', logoClass: 'brand-logo-valentino', brandDisplay: 'VALENTINO', name: 'Born In Roma Donna', type: 'Warm Florals', color: '#FF69B4', level: 95, description: 'A modern haute couture floriental. A couture elegance made of three qualities of Jasmine which bring a luxurious femininity, blended with Vanilla Bourbon.', notes: { top: 'Blackcurrant, Bergamot', heart: 'Jasmine Grandiflorum', base: 'Vanilla Bourbon, Guaiac Wood' }, image: 'https://fimgs.net/mdimg/perfume/o.55805.jpg' },
+            { id: 5, brand: 'Maison Margiela', logoClass: 'brand-logo-margiela', brandDisplay: 'Maison Margiela', name: 'Replica Jazz Club', type: 'Woody & Earthy', color: '#CD853F', level: 15, description: 'A smooth cocktail of warm and spicy scents that awakens the senses with contrasting lemon and pink pepper, reminiscing an anthology of classic cocktails.', notes: { top: 'Pink Pepper, Neroli', heart: 'Rum, Clary Sage', base: 'Tobacco Leaf, Vanilla' }, image: 'https://cdn.vuahanghieu.com/unsafe/0x900/left/top/smart/filters:quality(90)/https://admin.vuahanghieu.com/upload/product/2023/08/nuoc-hoa-maison-margiela-replica-jazz-club-edt-100ml-cho-nam-64d1e52d0580c-08082023134813.jpg' }
         ];
 
         // --- STATE ---
         let currentScreen = 'awakening';
-        let activeFragrance = fragrances[2]; // Default No.3
+        let activeFragrance = fragrances[2]; // Default Prada Paradoxe
+        let isScanned = false;
 
         // --- INITIALIZE ---
         document.addEventListener('DOMContentLoaded', () => {
@@ -306,12 +526,11 @@
             document.getElementById('awaking-animation').classList.remove('hidden');
             document.getElementById('awaking-text').style.opacity = '0';
 
-            // Generate particles
             const particleContainer = document.getElementById('dust-particles');
             particleContainer.innerHTML = '';
             for (let i = 0; i < 12; i++) {
                 const el = document.createElement('div');
-                el.className = 'absolute w-1.5 h-1.5 bg-[#D4AF37] rounded-full';
+                el.className = 'absolute w-1.5 h-1.5 bg-[#C8A97E] rounded-full';
                 const animDuration = 1 + Math.random();
                 el.style.top = '50%';
                 el.style.left = '50%';
@@ -350,12 +569,68 @@
             setTimeout(() => smoke.remove(), 1500);
         });
 
+        // 5. Simulate Bio-Scan and Empathic Notification (Extended to 5s)
+        window.simulateBioScan = () => {
+            const btn = document.getElementById('scan-btn');
+            const scanLine = document.getElementById('scan-line');
+            const aiCard = document.getElementById('ai-recommendation');
+            
+            aiCard.classList.add('hidden');
+
+            if (navigator.vibrate) navigator.vibrate(20);
+            btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Reading Bio-Rhythm...`;
+            scanLine.classList.remove('hidden');
+            scanLine.style.animation = 'scan-line 2.5s ease-in-out infinite';
+            lucide.createIcons();
+
+            setTimeout(() => {
+                if(!isScanned) {
+                    btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Syncing Environment...`;
+                    lucide.createIcons();
+                }
+            }, 2500);
+
+            setTimeout(() => {
+                document.getElementById('val-hr').innerText = '88 bpm (Elevated)';
+                document.getElementById('val-hr').classList.add('text-rose-400');
+                document.getElementById('val-stress').innerText = 'Moderate';
+                document.getElementById('val-stress').classList.add('text-purple-400');
+                document.getElementById('val-hydra').innerText = '68%';
+                
+                btn.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i> Analysis Complete`;
+                btn.classList.add('text-green-500', 'border-green-500/40', 'bg-gradient-to-r', 'from-green-500/10', 'to-transparent');
+                btn.classList.remove('text-luxury', 'border-[#C8A97E]/40', 'from-[#C8A97E]/10');
+                scanLine.style.animation = 'none';
+                scanLine.classList.add('hidden');
+                
+                aiCard.classList.remove('hidden');
+                lucide.createIcons();
+                isScanned = true;
+
+                setTimeout(() => {
+                    const notif = document.getElementById('empathic-notification');
+                    notif.classList.remove('-translate-y-[150%]', 'opacity-0');
+                    notif.classList.add('translate-y-0', 'opacity-100');
+                    if (navigator.vibrate) navigator.vibrate([30, 100, 30]);
+                }, 1500);
+
+            }, 5000); 
+        };
+
+        window.closeNotification = () => {
+            const notif = document.getElementById('empathic-notification');
+            notif.classList.remove('translate-y-0', 'opacity-100');
+            notif.classList.add('-translate-y-[150%]', 'opacity-0');
+        }
+
+
         // --- RENDERING & UI UPDATES ---
 
         function updateScreenVisibility() {
-            // Handle Awakening overlay
             const awakeningOverlay = document.getElementById('screen-awakening');
             const appWrapper = document.getElementById('app-wrapper');
+            const headerSubtitle = document.getElementById('header-subtitle');
+            const headerTitle = document.getElementById('header-title');
             
             if (currentScreen === 'awakening') {
                 awakeningOverlay.style.opacity = '1';
@@ -368,8 +643,8 @@
                 appWrapper.style.opacity = '1';
             }
 
-            // Views
-            ['dashboard', 'atelier', 'boutique'].forEach(view => {
+            const views = ['dashboard', 'atelier', 'boutique', 'community', 'profile'];
+            views.forEach(view => {
                 const el = document.getElementById(`view-${view}`);
                 if (view === currentScreen) {
                     el.classList.remove('hidden');
@@ -380,50 +655,46 @@
                 }
             });
 
-            // Header
-            const headerTitle = document.getElementById('header-title');
-            if(currentScreen === 'dashboard') headerTitle.innerText = "L'Écrin";
-            else if(currentScreen === 'atelier') headerTitle.innerText = "The Atelier";
-            else if(currentScreen === 'boutique') headerTitle.innerText = "The Boutique";
+            // Handle Welcome Back Header Logic
+            if(currentScreen === 'dashboard') {
+                headerSubtitle.classList.remove('hidden');
+                headerTitle.innerText = "Sarah Kim";
+            } else {
+                headerSubtitle.classList.add('hidden');
+                if(currentScreen === 'atelier') headerTitle.innerText = "The Atelier";
+                else if(currentScreen === 'boutique') headerTitle.innerText = "The Boutique";
+                else if(currentScreen === 'community') headerTitle.innerText = "Community";
+                else if(currentScreen === 'profile') headerTitle.innerText = "My Profile";
+            }
 
-            // Nav Tabs
-            ['dashboard', 'atelier', 'boutique'].forEach(nav => {
+            // Nav Tabs Highlight
+            views.forEach(nav => {
                 const btn = document.getElementById(`nav-${nav}`);
                 const iconBox = document.getElementById(`nav-icon-${nav}`);
                 
                 if (nav === currentScreen) {
-                    btn.className = "flex flex-col items-center gap-1.5 transition-colors text-[#D4AF37]";
-                    iconBox.className = "p-2 rounded-xl transition-all bg-[#D4AF37]/20";
+                    btn.className = "flex flex-col items-center gap-1 transition-colors text-luxury w-[20%]";
+                    iconBox.className = "p-1.5 rounded-xl transition-all bg-[#C8A97E]/10";
                 } else {
-                    btn.className = "flex flex-col items-center gap-1.5 transition-colors text-neutral-600 hover:text-neutral-400";
-                    iconBox.className = "p-2 rounded-xl transition-all";
+                    btn.className = "flex flex-col items-center gap-1 transition-colors text-neutral-500 hover:text-neutral-300 w-[20%]";
+                    iconBox.className = "p-1.5 rounded-xl transition-all";
                 }
             });
         }
 
         function updateUI() {
-            // Update Dashboard Cores
             renderDashboard();
             
-            // Update Dashboard Text
             document.getElementById('dashboard-glow').style.backgroundColor = activeFragrance.color;
-            document.getElementById('dashboard-frag-name').innerText = activeFragrance.name;
-            document.getElementById('dashboard-frag-desc').innerText = activeFragrance.description;
             
-            // Update Swipe Indicators
-            const indicators = document.getElementById('dashboard-indicators');
-            indicators.innerHTML = '';
-            fragrances.forEach((f, idx) => {
-                const div = document.createElement('div');
-                div.className = `h-1 rounded-full transition-all duration-300 ${activeFragrance.id === (idx + 1) ? 'w-6 bg-[#D4AF37]' : 'w-2 bg-neutral-800'}`;
-                indicators.appendChild(div);
-            });
-
-            // Update Atelier Text
+            let brandClass = `text-[10px] text-neutral-400 mb-1 opacity-80 tracking-widest ${activeFragrance.logoClass}`;
+            document.getElementById('dashboard-frag-brand').className = brandClass;
+            document.getElementById('dashboard-frag-brand').innerText = activeFragrance.brandDisplay;
+            document.getElementById('dashboard-frag-name').innerText = activeFragrance.name;
+            
             document.getElementById('atelier-frag-name').innerText = activeFragrance.name;
             document.getElementById('atelier-frag-type').innerText = activeFragrance.type;
 
-            // Re-render Atelier Cores to update Active state
             renderAtelier();
         }
 
@@ -431,26 +702,28 @@
             const container = document.getElementById('dashboard-cores-container');
             container.innerHTML = '';
             
+            // Ellipse Orbit
+            const radiusX = 130; 
+            const radiusY = 165; 
+
             fragrances.forEach((frag, index) => {
                 const angle = (index * (360 / 5) - 90) * (Math.PI / 180);
-                const radius = 130;
-                const x = Math.cos(angle) * radius;
-                const y = Math.sin(angle) * radius;
+                const x = Math.cos(angle) * radiusX;
+                const y = Math.sin(angle) * radiusY;
                 const isActive = activeFragrance.id === frag.id;
 
-                const bgDisplay = isActive ? 'rgba(0,0,0,0.8)' : frag.color;
-                const levelColor = frag.level > 20 ? '#D4AF37' : '#ef4444';
+                const bgDisplay = isActive ? '#1a1a1a' : frag.color;
+                const levelColor = frag.level > 20 ? '#C8A97E' : '#ef4444';
                 
-                // Note: top 50%, left 50% and translate perfectly centers them relative to the main container
                 const html = `
                     <div class="absolute flex flex-col items-center justify-center transition-all duration-500 cursor-pointer hover:scale-110 pointer-events-auto"
                          style="top: 50%; left: 50%; transform: translate(calc(-50% + ${x}px), calc(-50% + ${y}px)); z-index: 20;"
                          onclick="selectFragrance(${frag.id})">
-                        <div class="w-10 h-10 rounded-full border-2 transition-all duration-300 flex items-center justify-center ${isActive ? 'border-[#D4AF37] scale-110 shadow-[0_0_15px_rgba(212,175,55,0.4)]' : 'border-neutral-700/50'}"
+                        <div class="w-10 h-10 rounded-full border border-neutral-700/50 transition-all duration-300 flex items-center justify-center shadow-lg ${isActive ? 'border-luxury ring-2 ring-[#C8A97E]/30 scale-110 shadow-[0_0_20px_rgba(200,169,126,0.3)]' : ''}"
                              style="background-color: ${bgDisplay}">
-                            ${isActive ? '<i data-lucide="droplet" class="w-4 h-4 text-[#D4AF37]"></i>' : ''}
+                            ${isActive ? '<i data-lucide="droplet" class="w-4 h-4 text-luxury"></i>' : ''}
                         </div>
-                        <div class="w-8 h-1 bg-neutral-800 rounded-full mt-2 overflow-hidden">
+                        <div class="w-8 h-1 bg-neutral-800 rounded-full mt-2 overflow-hidden shadow-inner">
                             <div class="h-full rounded-full transition-all duration-1000"
                                  style="width: ${frag.level}%; background-color: ${levelColor}"></div>
                         </div>
@@ -470,8 +743,8 @@
                 const isSelected = activeFragrance.id === frag.id;
                 
                 const activeClasses = isSelected 
-                    ? 'border-[#D4AF37] shadow-[0_0_20px_rgba(212,175,55,0.4)] scale-110' 
-                    : 'border-neutral-800 opacity-60 hover:opacity-100 hover:border-neutral-500';
+                    ? 'border-luxury shadow-[0_0_20px_rgba(200,169,126,0.3)] scale-110' 
+                    : 'border-neutral-700 opacity-50 hover:opacity-100 hover:border-neutral-500';
 
                 const html = `
                     <div class="absolute inset-0" style="transform: rotate(${angle}deg)">
@@ -479,7 +752,7 @@
                             <div class="w-full h-full animate-[counter-orbit_40s_linear_infinite] group-hover:[animation-play-state:paused]">
                                 <div class="w-full h-full rounded-full border-2 flex items-center justify-center transition-all duration-300 ${activeClasses}"
                                      style="background-color: ${frag.color}; transform: rotate(-${angle}deg)">
-                                    <span class="text-xs font-bold text-white/90 drop-shadow-md">${frag.id}</span>
+                                    <span class="text-[10px] font-bold text-white/90 drop-shadow-md">${frag.id}</span>
                                 </div>
                             </div>
                         </div>
@@ -494,47 +767,60 @@
             container.innerHTML = '';
 
             fragrances.forEach(frag => {
-                const splitName = frag.name.split(' - ');
-                const displayTitle = splitName.length > 1 ? splitName[1] : frag.name;
-
                 const html = `
-                    <div class="relative w-full min-h-[80vh] flex flex-col justify-end border-b border-neutral-900">
-                        <div class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40 bg-parallax"
-                             style="background-image: url('${frag.image}')"></div>
-                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent"></div>
+                    <div class="relative w-full flex flex-col justify-end border-b border-neutral-900 pb-10 bg-[#161311]">
+                        <!-- Light presentation area to blend white background images -->
+                        <div class="relative w-full pt-12 pb-8 bg-[#F8F5F0] flex items-center justify-center rounded-b-[40px] shadow-sm">
+                            <img src="${frag.image}" alt="${frag.name}" class="h-[45vh] w-auto object-contain mix-blend-multiply drop-shadow-2xl transition-transform hover:scale-105 duration-700" />
+                            <div class="absolute inset-0 rounded-b-[40px] shadow-[inset_0_-20px_40px_rgba(0,0,0,0.05)] pointer-events-none"></div>
+                        </div>
                         
-                        <div class="relative z-10 px-8 pb-16 space-y-6">
-                            <div class="space-y-2">
-                                <span class="text-xs font-bold tracking-[0.3em] uppercase" style="color: ${frag.color}">
-                                    ${frag.type} Collection
-                                </span>
-                                <h3 class="font-maglite text-4xl text-white font-light leading-tight">
-                                    ${displayTitle}
+                        <div class="relative z-10 px-8 pt-8 space-y-5">
+                            <div class="space-y-1">
+                                <div class="${frag.logoClass} text-luxury mb-1 inline-block text-[11px]">${frag.brandDisplay}</div>
+                                <h3 class="font-maglite text-3xl text-white font-light leading-tight">
+                                    ${frag.name}
                                 </h3>
+                                <span class="text-[9px] font-bold tracking-[0.2em] uppercase text-neutral-400 block mt-1">
+                                    ${frag.type}
+                                </span>
                             </div>
 
-                            <p class="text-sm font-light text-neutral-300 leading-relaxed max-w-xs">
+                            <p class="text-[13px] font-light text-neutral-300 leading-relaxed max-w-sm">
                                 ${frag.description}
                             </p>
 
-                            <div class="grid grid-cols-3 gap-4 border-y border-neutral-800 py-4 my-6">
+                            <div class="grid grid-cols-3 gap-3 border-y border-neutral-800/60 py-4 my-4">
                                 <div class="space-y-1">
-                                    <p class="text-[10px] text-neutral-500 uppercase tracking-widest">Top</p>
-                                    <p class="text-xs text-neutral-300">${frag.notes.top}</p>
+                                    <p class="text-[9px] text-neutral-500 uppercase tracking-widest">Top</p>
+                                    <p class="text-[11px] text-neutral-300 leading-tight">${frag.notes.top}</p>
                                 </div>
                                 <div class="space-y-1">
-                                    <p class="text-[10px] text-neutral-500 uppercase tracking-widest">Heart</p>
-                                    <p class="text-xs text-neutral-300">${frag.notes.heart}</p>
+                                    <p class="text-[9px] text-neutral-500 uppercase tracking-widest">Heart</p>
+                                    <p class="text-[11px] text-neutral-300 leading-tight">${frag.notes.heart}</p>
                                 </div>
                                 <div class="space-y-1">
-                                    <p class="text-[10px] text-neutral-500 uppercase tracking-widest">Base</p>
-                                    <p class="text-xs text-neutral-300">${frag.notes.base}</p>
+                                    <p class="text-[9px] text-neutral-500 uppercase tracking-widest">Base</p>
+                                    <p class="text-[11px] text-neutral-300 leading-tight">${frag.notes.base}</p>
                                 </div>
                             </div>
 
-                            <button class="w-full py-4 px-6 border border-[#D4AF37]/50 text-[#D4AF37] uppercase tracking-widest text-xs font-semibold hover:bg-[#D4AF37] hover:text-black transition-colors duration-300 flex items-center justify-center gap-2">
-                                <i data-lucide="shopping-bag" class="w-4 h-4"></i> Add Core to Cart
-                            </button>
+                            <!-- Pricing Options -->
+                            <div class="flex flex-col gap-3">
+                                <div class="flex gap-2">
+                                    <button class="flex-1 py-3 border border-luxury bg-luxury/5 text-luxury text-[10px] font-bold uppercase tracking-widest hover:bg-luxury/20 transition-colors flex flex-col items-center justify-center gap-1">
+                                        <span>Starter Kit</span>
+                                        <span class="font-normal text-white">$150.00</span>
+                                    </button>
+                                    <button class="flex-1 py-3 border border-neutral-700 text-neutral-400 text-[10px] font-bold uppercase tracking-widest hover:border-neutral-500 hover:text-white transition-colors flex flex-col items-center justify-center gap-1">
+                                        <span>Refill Slices (3)</span>
+                                        <span class="font-normal">$30.00</span>
+                                    </button>
+                                </div>
+                                <button class="text-[10px] text-neutral-500 underline uppercase tracking-widest hover:text-luxury transition-colors">
+                                    View Refill Instructions & Store Locator
+                                </button>
+                            </div>
                         </div>
                     </div>
                 `;
